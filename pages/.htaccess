@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^karyawan ./?page=karyawan
+RewriteRule ^jabatan ./?page=jabatan
