@@ -3,26 +3,10 @@
 include '../../include/db.php';
 
 if (isset($_GET['act'])) {
-	if ($_GET['act'] == 'get') {
-		$karyawan = $koneksi->query("SELECT * FROM karyawan JOIN jabatan ON karyawan.jabatan = jabatan.id");
+	if ($_GET['act'] == 'hapus') {
+		$unik = $_POST['unik'];
 
-		$data = array();
-		while ($k = $karyawan->fetch_assoc()) {
-			$data[] = [
-				'no_unik' => $k['no_unik'],
-				'nama' => $k['nama'],
-				'jabatan' => $k['keterangan'],
-				'telepon' => $k['telepon'],
-			];
-		}
-
-		echo json_encode($data);
-
-		die;
-	} elseif ($_GET['act'] == 'hapus') {
-		$id = $_POST['id'];
-
-		$cek = $koneksi->query("DELETE FROM jabatan WHERE id = '$id'");
+		$cek = $koneksi->query("DELETE FROM karyawan WHERE unik = '$unik'");
 
 		if ($cek) {
 			echo 1;
@@ -30,9 +14,12 @@ if (isset($_GET['act'])) {
 			echo 2;
 		}
 	} elseif ($_GET['act'] == 'post') {
-		$jabatan = $_POST['jabatan'];
+		$unik = $_POST['unik'];
+		$nama = $_POST['nama'];
+		$telepon = $_POST['telepon'];
+		$jenis = $_POST['jenis'];
 
-		$cek = $koneksi->query("INSERT INTO jabatan (keterangan) VALUES('$jabatan')");
+		$cek = $koneksi->query("INSERT INTO karyawan (unik, nama, id_jenis, telepon) VALUES('$unik', '$nama', '$jenis', '$telepon')");
 		
 		if ($cek) {
 			echo 1;
@@ -40,10 +27,12 @@ if (isset($_GET['act'])) {
 			echo 2;
 		}
 	} elseif ($_GET['act'] == 'update') {
-		$id = $_POST['id'];
-		$jabatan = $_POST['jabatan'];
+		$unik = $_POST['unik'];
+		$nama = $_POST['nama'];
+		$telepon = $_POST['telepon'];
+		$jenis = $_POST['jenis'];
 
-		$cek = $koneksi->query("UPDATE jabatan SET keterangan = '$jabatan' WHERE id = '$id'");
+		$cek = $koneksi->query("UPDATE karyawan SET nama = '$nama', telepon = '$telepon', id_jenis = '$jenis' WHERE unik = '$unik'");
 		
 		if ($cek) {
 			echo 1;
@@ -51,4 +40,21 @@ if (isset($_GET['act'])) {
 			echo 2;
 		}
 	}
+} else {
+	$karyawan = $koneksi->query("SELECT * FROM karyawan JOIN jenis ON karyawan.id_jenis = jenis.id");
+
+	$data = array();
+	while ($k = $karyawan->fetch_assoc()) {
+		$data[] = [
+			'unik' => $k['unik'],
+			'nama' => $k['nama'],
+			'jenis' => $k['jenis'],
+			'id_jenis' => $k['id_jenis'],
+			'telepon' => $k['telepon'],
+		];
+	}
+
+	echo json_encode($data);
+
+	die;
 }

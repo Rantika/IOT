@@ -1,4 +1,5 @@
 RewriteEngine On
 
+RewriteRule ^kendaraan ./?page=kendaraan
 RewriteRule ^karyawan ./?page=karyawan
-RewriteRule ^jabatan ./?page=jabatan
+RewriteRule ^jenis ./?page=jenis

@@ -16,9 +16,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= ($_GET['page']) == 'jabatan' ? 'active' : '' ?>" href="/pages/jabatan">
+            <a class="nav-link <?= ($_GET['page']) == 'jenis' ? 'active' : '' ?>" href="/pages/jenis">
               <span data-feather="file"></span>
-              Data Jabatan
+              Jenis Kendaraan
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <?= ($_GET['page']) == 'kendaraan' ? 'active' : '' ?>" href="/pages/kendaraan">
+              <span data-feather="file"></span>
+              Data Kendaraan
             </a>
           </li>
         </ul>

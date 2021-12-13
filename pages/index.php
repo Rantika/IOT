@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include '../include/db.php';
+
 if (empty($_SESSION['logged'])) {
   echo "<script>alert('Anda harus login dulu!'); location.href = '/';</script>";
 }

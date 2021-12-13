@@ -18,4 +18,6 @@ function signOut() {
   'use strict'
 
   feather.replace()
+
+  
 })()
