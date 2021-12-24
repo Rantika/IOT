@@ -1,6 +1,8 @@
 <?php 
 
 include 'include/db.php';
+// echo password_hash('admin', PASSWORD_DEFAULT);
+// die();
 
 if (isset($_GET['module'])) {
   session_start();

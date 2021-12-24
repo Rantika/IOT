@@ -2,28 +2,29 @@
 
 include '../../include/db.php';
 
-$kendaraan = $koneksi->query("SELECT kendaraan.*, karyawan.nama, jenis.jenis, karyawan.telepon FROM kendaraan LEFT JOIN karyawan ON kendaraan.unik = karyawan.unik LEFT JOIN jenis ON karyawan.id_jenis = jenis.id;");
+if (isset($_POST['tglm'])) {
+	$tglm = $_POST['tglm'];
+	$tgls = $_POST['tgls'];
+	$kendaraan = $koneksi->query("SELECT * FROM kendaraan WHERE waktu BETWEEN '$tglm' AND '$tgls'");
+} else {
+	$kendaraan = $koneksi->query("SELECT * FROM kendaraan");
+}
 
 $data = array();
 
 $no = 1;
 
-while ($k = $kendaraan->fetch_assoc()) {
+while ($k = $kendaraan->fetch_assoc()) { 
 	$bulan = bulan(date("m", strtotime($k['waktu'])));
 	$hari = hari(date("l", strtotime($k['waktu'])));
 	$tanggal = date("d", strtotime($k['waktu']));
-	$data[] = [
-		'no' => $no++,
-		'unik' => $k['unik'],
-		'nama' => $k['nama'],
-		'jenis' => $k['jenis'],
-		'telepon' => $k['telepon'],
-		'tanggal' => $hari.", ".$tanggal." ".$bulan." ".date("Y", strtotime($k['waktu'])),
-		'waktu' => date("H:i:s a", strtotime($k['waktu'])),
-		'aksi' => $k['aksi'],
-	];
+	?>
+<tr>
+	<th><?= $no++ ?></th>
+	<td><?= $k['unik'] ?></td>
+	<td><?= $hari.", ".$tanggal." ".$bulan." ".date("Y", strtotime($k['waktu'])) ?></td>
+	<td><?= date("H:i:s a", strtotime($k['waktu'])) ?></td>
+</tr>
+
+<?php
 }
-
-echo json_encode($data);
-
-die;

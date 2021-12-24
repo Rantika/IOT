@@ -6,9 +6,20 @@
 		Selamat datang di halaman administrator <strong><?= $email ?></strong>
 	</div>
 
+	<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+		<h5 class="card-header">Data Kendaraan</h5>
+		<div class="card-body">
+			<img src="/assets/images/bell.svg">
+			<?php
+			$kendaraan = $koneksi->query("SELECT * FROM kendaraan")->num_rows;
+			echo "<b>$kendaraan</b>";
+			?>
+		</div>
+	</div>
+
 	<div class="row mt-3">
-		<div class="col-lg-6 mb-2">
-			<h4 class="text-center">Data Per Bulan</h4>
+		<div class="col-lg mb-2">
+			<h4 class="text-center">Data Kendaraan</h4>
 			<canvas class="my-4 w-100" id="chartHari" width="900" height="380"></canvas>
 		</div>
 	</div>
@@ -37,7 +48,7 @@
 		return s.join(dec);
 	}
 
-	var cth = document.getElementById('chartHari')
+	var cth = document.getElementById('chartHari').getContext('2d');
 
 	var chartHari = new Chart(cth, {
 		type: 'line',
@@ -71,38 +82,12 @@
 			}]
 		},
 		options: {
-			responsive: true,
 			scales: {
 				xAxes: [{
-					time: {
-						unit: 'date'
-					},
-					gridLines: {
-						drawBorder: false
-					},
 					ticks: {
-						maxTicksLimit: 7
-					}
-				}],
-				yAxes: [{
-					ticks: {
-						maxTicksLimit: 5,
-						padding: 10,
-						callback: function(value, index, values) {
-							return number_format(value);
-						}
+						beginAtZero: 'date'
 					},
-					gridLines: {
-						color: "rgb(234, 236, 244)",
-						zeroLineColor: "rgb(234, 236, 244)",
-						drawBorder: false,
-						borderDash: [2],
-						zeroLineBorderDash: [2]
-					}
 				}]
-			},
-			legend: {
-				display: false
 			},
 			tooltips: {
 				backgroundColor: "rgb(255,255,255)",
